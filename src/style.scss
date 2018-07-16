@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Amiko:600');
+
+
+$field-width: 400px;
+$grid-row-cells: 4;
+$cell: 100px;
+$orange: #FD9727;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Amiko', sans-serif;
+}
+
+.game-container {
+  width: 100vw;
+  height:100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .field {
+    position: relative;
+  
+    width: $field-width;
+    height: $field-width;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    border: 1px black solid;
+    .cell {
+      width: $cell;
+      height: $cell;
+      position:absolute;
+      font-size: 2rem;
+      color: $orange;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+     
+      border: 1px black solid;
+    }
+
+    .cell-active {
+      color: $orange;
+      background: $orange;
+    }
+
+    @for $x from 1 through $grid-row-cells {
+      @for $y from 1 through $grid-row-cells {
+        .cell-coordinates-#{$x}-#{$y} {
+          left: floor($cell * $x) - $cell;
+          top: floor($cell * $y) - $cell;
+        }
+      }
+    }
+  }
+
+}
