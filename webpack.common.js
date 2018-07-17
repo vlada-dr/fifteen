@@ -1,10 +1,8 @@
-const webpack = require('webpack');
+const {resolve} = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
   module: {
     rules: [
       {
@@ -31,10 +29,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new HtmlWebpackPlugin({
+      title: 'LUN',
+      template: 'index.tpl.html',
+    }),
   ],
-  devServer: {
-    contentBase: './dist',
-    hot: true
-  }
 };
