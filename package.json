@@ -2,10 +2,9 @@
   "name": "fifteen",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://mouire.github.io/fifteen/",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "start": "webpack-dev-server --config ./webpack.dev.js --mode development",
     "test": "echo \"No test specified\" && exit 0",
     "deploy": "gh-pages -d dist",
     "build": "webpack -p --config=webpack.prod.js"
