@@ -6,6 +6,7 @@ export default class App extends Component {
   constructor(){
     super()
     this.state = {
+      version: 1,
       cells: this.generate(),
       current: {
         x: 4,
@@ -15,16 +16,26 @@ export default class App extends Component {
   }
 
   shuffle = () => {
-    const newCells = this.state.cells.sort((a, b) => 0.5 - Math.random())
-    for (let i = 0; i < newCells.length; i++) {
-      newCells[i].value = i+1
+    const cells = [], res = [], {version} = this.state
+    for (let i = 0; i < 16; i++) {
+      cells.push(i)
     }
-    const secret = Math.floor(Math.random()*(newCells.length-1))
-    const current = newCells[secret]
-    newCells[secret] = {...this.state.current, value: current.value}
+    cells.sort((a, b) => 0.5 - Math.random())
+
+    for (let i = 0; i < 15; i++) {
+      res.push({ 
+        x:  cells[i]%4+1, 
+        y:  Math.floor(cells[i]/4)+1,
+        value: i + 1
+      })
+    }
     this.setState({ 
-      cells: newCells,
-      current,
+      cells: res,
+      version: version+1,
+      current: {
+        x: cells[15]%4+1, 
+        y: Math.floor(cells[15]/4)+1
+      }
     })
   }
 
@@ -45,11 +56,11 @@ export default class App extends Component {
   }
 
   render() {
-    const { cells, current } = this.state
+    const { cells, current, version } = this.state
     return (
       <div className='game-container'>
         <button onClick={this.shuffle}>Shuffle</button>
-        <Game cells={cells} current={current} />
+        <Game cells={cells} current={current} version={version}/>
       </div>
     );
   }
