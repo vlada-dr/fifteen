@@ -7,13 +7,24 @@ export default class App extends Component {
     super()
     this.state = {
       cells: this.generate(),
+      current: {
+        x: 4,
+        y: 4,
+      },
     }
   }
 
   shuffle = () => {
     const newCells = this.state.cells.sort((a, b) => 0.5 - Math.random())
+    for (let i = 0; i < newCells.length; i++) {
+      newCells[i].value = i+1
+    }
+    const secret = Math.floor(Math.random()*(newCells.length-1))
+    const current = newCells[secret]
+    newCells[secret] = {...this.state.current, value: current.value}
     this.setState({ 
-      cells: newCells
+      cells: newCells,
+      current,
     })
   }
 
@@ -30,15 +41,15 @@ export default class App extends Component {
         value: i + 1
       })
     }
-    res.push({x: 4, y: 4, value: ''})
     return res
   }
 
   render() {
-    const { cell } = this.state
+    const { cells, current } = this.state
     return (
       <div className='game-container'>
-        <Game cells={cells} />
+        <button onClick={this.shuffle}>Shuffle</button>
+        <Game cells={cells} current={current} />
       </div>
     );
   }

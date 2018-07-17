@@ -6,71 +6,103 @@ export default class Game extends Component {
 
 
   state = {
-    cells: this.props.cells.filter((el) => el.value !== ''),
-    x: this.props.cells.find((el) => el.value === '').x,
-    y: this.props.cells.find((el) => el.value === '').y,
+    cells: this.props.cells,
+    current: this.props.current,
+    previous: {},
   }
 
   componentDidMount = () => document.addEventListener('keydown', this.keyDownListener)
 
-  move = (condition) => (
-   і
-  )
-
   keyDownListener = (e) => {
-    const { x, y, cells } = this.state
-    let newx = x, newy = y, move=''
+    const { current, cells } = this.state
+    let xAxis = true
+    const {x, y} = current
+    let newx = x, newy = y, move='', from = null, to = null
     switch (e.which) {
       case 40:
         newy = (y > 1 && y < 5) ? y-1 : y
-        move='top'
+        from = y
+        to = newy
+        xAxis=false
         break;
       case 38: 
         newy = (y > 0 && y < 4) ? y+1 : y
-        move='bottom'
+        from = y
+        to = newy
+        xAxis=false
         break;
       case 39: 
-        newx = (x > 1 && y < 5) ? x-1 : x
-        move='right'
+        newx = (x > 1 && x < 5) ? x-1 : x
+        from = x
+        to = newx
+        move='x'
       break;
       case 37: 
-        newx = (x > 0 && y < 4) ? x+1 : x
-        move='left'
+        newx = (x > 0 && x < 4) ? x+1 : x
+        from = x
+        to = newx
+        move='x'
       break;
       default:
         break;
     }
-    const elem = cells.find((c) => (c.x === newx&& c.y===newy))
-      if (elem) {elem.x = x
-      elem.y=y
+    const newElem = cells.findIndex((c) => (c.x === newx&& c.y===newy))
+      if (newElem) {
+    const elem = {
+      ...cells[newElem], 
+      x, 
+      y,
+    }
     const newcells = cells
-    newcells[elem.value-1] =elem
+
+    newcells[newElem] = elem
     this.setState({
-       x: newx, 
-       y:newy, 
+       current: {x: newx, y: newy },
        cells:newcells, 
-       prevx:x,
-       prevy:y ,
-       from:move,
+       previous: {
+        x, 
+        y, 
+        xAxis,
+        axis: xAxis ? 'x' : 'y',
+       },
+       move: {
+        from,
+        to,
+        direction: move === 'x' ? 'left': 'top',
+       },
       })}
   }
   componentWillUnmount = () => document.removeEventListener('keydown', this.keyDownListener)
 
   render() {
-    const {cells, x, y, prevx, prevy, from} = this.state
-
+    const {cells, current, previous, move} = this.state
+    const {axis} = previous
     return (
-
-    <div className="field">
-    {cells.map(({...cell}) => (
-    <Cell 
-    {...cell}
-     key={cell.value}
-     move={cell.x === prevx && cell.y===prevy && from}
-     />))
-     }
-      <Cell x={x} y={y} value='' />
-    </div>
+      <div className="field">
+      {
+        cells.map(({...cell}) => (
+          <Cell 
+            {...cell}
+            key={cell.value}
+            move={cell.x === previous.x && cell.y===previous.y && 
+              {
+                from: current[axis],
+                to:previous[axis],
+                axis,
+              }
+            }
+          />
+        ))
+      }
+        <Cell 
+          x={current.x} 
+          y={current.y} 
+          move={move && {
+            from: previous[axis],
+            to: current[axis],
+            axis,
+          }} active />
+      </div>
     );
   }
 }
