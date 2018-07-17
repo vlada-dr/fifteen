@@ -6,9 +6,13 @@ module.exports = merge(commonConfig, {
   mode: 'development',
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
     './src/index.js'
   ],
+  output: {
+    path: resolve(__dirname, 'dist'),
+    publicPath: '/static/',
+    filename: 'bundle.js'
+  },
   devServer: {
     hot: true
   },

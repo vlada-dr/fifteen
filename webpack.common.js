@@ -11,7 +11,7 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.scss$/,
+        test: /\.scss|css$/,
         use: [
           { loader: "style-loader" },
           { loader: "css-loader" },
@@ -23,15 +23,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
-  output: {
-    path: __dirname + '/dist',
-    publicPath: '/',
-    filename: 'bundle.js'
-  },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'LUN',
-      template: 'index.tpl.html',
-    }),
+    new HtmlWebpackPlugin({template: './src/index.html'})
   ],
 };

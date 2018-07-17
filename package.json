@@ -2,11 +2,12 @@
   "name": "fifteen",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "homepage": "https://github.com/mouire/fifteen",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.dev.js --mode development",
     "test": "echo \"No test specified\" && exit 0",
     "deploy": "gh-pages -d dist",
+    "prebuild": "rimraf dist",
     "build": "webpack -p --config=webpack.prod.js"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.8.3",
     "react-hot-loader": "^4.3.3",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
     "webpack": "^4.16.1",

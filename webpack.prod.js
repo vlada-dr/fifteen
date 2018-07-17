@@ -1,6 +1,6 @@
 const merge = require('webpack-merge');
-const {resolve} = require('path');
-
+var path = require('path');
+var webpack = require('webpack');
 const commonConfig = require('./webpack.common.js');
 
 module.exports = merge(commonConfig, {
@@ -8,9 +8,13 @@ module.exports = merge(commonConfig, {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    filename: 'bundle.[hash].min.js',
-    path: resolve(__dirname, '/dist'),
-    publicPath: '/',
+    filename: 'static/bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
+  
+
+  devtool: 'source-map',
+
   plugins: [],
 });
