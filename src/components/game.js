@@ -17,8 +17,6 @@ export default class Game extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    // Store prevId in state so we can compare when props change.
-    // Clear out previously-loaded data (so we don't render stale stuff).
     if (props.version !== state.prev ) {
       return {
         version: props.version,
@@ -60,10 +58,11 @@ export default class Game extends Component {
       const newcells = cells
       newcells[swap] = { ...cells[swap], x, y }
       this.setState({
-        current: {x: newx, y: newy },
-        cells:newcells, 
+        current: { x: newx, y: newy },
+        cells: newcells, 
         previous: { x, y, axis },
       })
+      this.props.check(newcells)
     }
   }
 

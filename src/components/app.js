@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Game from './game'
 
+const position = (id) => ({ x: id % 4 + 1, y: Math.floor(id / 4) + 1})
 
 export default class App extends Component {
   constructor(){
@@ -12,30 +13,25 @@ export default class App extends Component {
         x: 4,
         y: 4,
       },
+      win: false,
     }
   }
 
   shuffle = () => {
-    const cells = [], res = [], {version} = this.state
+    const cells = [], res = [], { version } = this.state
     for (let i = 0; i < 16; i++) {
       cells.push(i)
     }
     cells.sort((a, b) => 0.5 - Math.random())
 
     for (let i = 0; i < 15; i++) {
-      res.push({ 
-        x:  cells[i]%4+1, 
-        y:  Math.floor(cells[i]/4)+1,
-        value: i + 1
-      })
+      res.push(Object.assign(position(cells[i]), { value: i + 1 }))
     }
     this.setState({ 
       cells: res,
       version: version+1,
-      current: {
-        x: cells[15]%4+1, 
-        y: Math.floor(cells[15]/4)+1
-      }
+      current: position(cells[15]),
+      win: false,
     })
   }
 
@@ -46,21 +42,39 @@ export default class App extends Component {
     }
     
     for (let i = 0; i < size*size-1; i++) {
-      res.push({ 
-        x:  cells[i]%size+1, 
-        y:  Math.floor(cells[i]/size)+1,
-        value: i + 1
-      })
+      res.push(Object.assign(position(cells[i]), { value: i + 1 }))
     }
     return res
   }
 
+  check = (cells) => {
+    const win = cells.every((cell) => (cell.x) + (cell.y - 1) * 4 === cell.value)
+    
+    this.setState({ win })
+    if (win) { 
+      this.generate()
+    }
+  }
+
   render() {
-    const { cells, current, version } = this.state
+    const { cells, current, version, win } = this.state
     return (
       <div className='game-container'>
-        <button onClick={this.shuffle}>Shuffle</button>
-        <Game cells={cells} current={current} version={version}/>
+        <button onClick={this.shuffle} className='main'>Shuffle</button>
+        <Game   
+          cells={cells} 
+          current={current} 
+          version={version}
+          check={this.check}
+        />
+        {
+          win ? <div className='win'>
+            You win! 
+            <button onClick={this.shuffle} >
+              Play again?
+            </button>
+          </div> : null
+        }
       </div>
     );
   }
