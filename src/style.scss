@@ -34,8 +34,6 @@ html, body {
       height: $cell;
       position:absolute;
       font-size: 2rem;
-      color: $orange;
-      
       display: flex;
       align-items: center;
       justify-content: center;
@@ -52,6 +50,7 @@ html, body {
       background: $orange;
     }
 
+    
     @for $x from 1 through $grid-row-cells {
       @for $y from 1 through $grid-row-cells {
         .cell-coordinates-#{$x}-#{$y} {
