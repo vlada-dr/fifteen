@@ -1,22 +1,40 @@
-const merge = require('webpack-merge');
 const webpack = require('webpack');
-const commonConfig = require('./webpack.common.js');
 
-module.exports = merge(commonConfig, {
-  mode: 'development',
+module.exports = {
   entry: [
     'react-hot-loader/patch',
     './src/index.js'
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
+        ]
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
   output: {
-    path: resolve(__dirname, 'dist'),
-    publicPath: '/static/',
+    path: __dirname + '/dist',
+    publicPath: '/',
     filename: 'bundle.js'
   },
-  devServer: {
-    hot: true
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(), 
+    new webpack.HotModuleReplacementPlugin()
   ],
-});
+  devServer: {
+    contentBase: './dist',
+    hot: true
+  }
+};

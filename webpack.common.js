@@ -1,29 +1,30 @@
-const {resolve} = require('path');
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: {
+          loader: 'babel-loader'
+        }
       },
       {
-        test: /\.scss|css$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" },
-          { loader: "sass-loader" }
-        ]
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader!sass-loader",
+        })
       }
     ]
   },
-  resolve: {
-    extensions: ['*', '.js', '.jsx']
-  },
   plugins: [
-    new HtmlWebpackPlugin({template: './src/index.html'})
-  ],
-};
+    new HtmlWebpackPlugin({ 
+      template: './src/index.html', 
+      filename: './index.html' 
+    }),
+    new ExtractTextPlugin('style.css')
+  ]
+}

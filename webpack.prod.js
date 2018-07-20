@@ -1,20 +1,16 @@
-const merge = require('webpack-merge');
-var path = require('path');
 var webpack = require('webpack');
-const commonConfig = require('./webpack.common.js');
+var merge = require('webpack-merge');
 
-module.exports = merge(commonConfig, {
-  mode: 'production',
-  entry: './src/index.js',
-  devtool: 'source-map',
-  output: {
-    filename: 'static/bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
-  },
-  
+var baseConfig = require('./webpack.common');
+var optimizationConfig = require('./webpack.optimize');
 
-  devtool: 'source-map',
+const productionConfiguration = function (env) {
+  const NODE_ENV = env.NODE_ENV ? env.NODE_ENV : 'development';
+  return {
+    plugins: [
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(NODE_ENV) }),
+    ]
+  };
+}
 
-  plugins: [],
-});
+module.exports = merge.smart(baseConfig, optimizationConfig, productionConfiguration);
