@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react';
+
 
 export const Cell = ({x, y, value, active, move}) => (
   <div

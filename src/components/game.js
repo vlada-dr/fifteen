@@ -32,7 +32,7 @@ export default class Game extends Component {
   keyDownListener = (e) => {
     const { current, cells } = this.state
     const {x, y} = current
-    let newx = x, newy = y, axis = 'x'
+    let newx = x, newy = y, axis = 'x', trueKey = true;
     switch (e.which) {
       case 40:
         newy = (y > 1 && y < 5) ? y-1 : y
@@ -49,12 +49,13 @@ export default class Game extends Component {
         newx = (x > 0 && x < 4) ? x+1 : x
       break;
       default:
+        trueKey = false;
         break;
     }
     
     const swap = cells.findIndex((c) => (c.x === newx&& c.y===newy))
     
-    if (swap) {
+    if (trueKey && swap) {
       const newcells = cells
       newcells[swap] = { ...cells[swap], x, y }
       this.setState({
