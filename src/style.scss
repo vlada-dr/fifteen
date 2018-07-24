@@ -24,8 +24,8 @@ html, body {
 
   @keyframes win-alert {
     from {  
-      width: 0vw;
-      height: 0vw;
+      width: 0;
+      height: 0;
       opacity: 0;
     }
     to {  
@@ -69,9 +69,9 @@ html, body {
     font-size: 1.5rem;
     font-weight: bolder;
     text-transform: uppercase;
+
     button {
       background: transparent;
-      border: none;
       border-radius: 4px;
       -webkit-appearance: none;
       outline: none;
@@ -102,59 +102,6 @@ html, body {
     box-sizing: border-box;
 
     border: 1px black solid;
-    .cell {
-      
-      background: white;
-      width: $cell;
-      height: $cell;
-      position:absolute;
-      font-size: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-     
-      border: 1px black solid;
-      color: $orange;
-      z-index: 2;
-    }
-
-    .cell-active {
-      background: transparent;
-      box-sizing: border-box;
-    }
-
-
-    @for $x from 1 through $grid-row-cells {
-      @for $y from 1 through $grid-row-cells {
-        .cell-coordinates-#{$x}-#{$y} {
-          left: floor($cell * $x) - $cell;
-          top: floor($cell * $y) - $cell;
-        }
-      }
-    }
-
-    @for $prev from 1 through $grid-row-cells {
-      @for $next from 1 through $grid-row-cells {
-        @each $direction in $moving {
-          .#{$direction}-from-#{$prev}-to-#{$next} {
-            animation-duration: 0.4s;
-            animation-name: #{$direction}-from-#{$prev}-to-#{$next};
-            animation-fill-mode: forwards;
-          }
-          @keyframes #{$direction}-from-#{$prev}-to-#{$next} {
-            from {
-              #{$direction}: floor($cell * $prev) - $cell;
-            }
-            to {
-              #{$direction}: floor($cell * $next) - $cell;
-            }
-          }
-        }
-      }
-    }
+   
   }
 }

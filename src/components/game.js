@@ -30,8 +30,7 @@ export default class Game extends Component {
   }
 
   keyDownListener = (e) => {
-    const { current, cells } = this.state
-    const {x, y} = current
+    const { current: { x, y }, cells } = this.state;
     let newx = x, newy = y, axis = 'x', trueKey = true;
     switch (e.which) {
       case 40:
