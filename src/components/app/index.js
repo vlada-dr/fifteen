@@ -5,6 +5,8 @@ import './style.scss';
 
 const position = id => ({ x: (id % 4) + 1, y: Math.floor(id / 4) + 1 });
 
+const getValue = (x, y) => x + (y - 1) * 4;
+
 function generate() {
   const res = [];
   const size = 4;
@@ -46,9 +48,7 @@ export default class App extends Component {
   }
 
   check = (cells) => {
-    const win = cells.every(
-      cell => (cell.x) + (cell.y - 1) * 4 === cell.value,
-    );
+    const win = cells.every(({ x, y, value }) => getValue(x, y) === value);
 
     this.setState({ win });
   }

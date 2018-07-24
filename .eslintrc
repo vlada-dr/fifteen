@@ -8,6 +8,7 @@
   "rules": {
       "indent": 2,
       "linebreak-style": "off",
+      "object-curly-newline": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }
