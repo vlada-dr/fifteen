@@ -37,6 +37,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "gh-pages": "^1.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"

@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames/bind';
 import './style.scss';
 
 
@@ -8,17 +9,23 @@ const Cell = ({
   value,
   active,
   move,
-}) => (
-  <div
-    key={`cell-${value}`}
-    className={`
-      cell cell-coordinates-${x}-${y} 
-      ${active ? 'cell-active' : ''}
-      ${move && `${move.axis === 'x' ? 'left' : 'top'}-from-${move.from}-to-${move.to}`}
-    `}
-  >
-    {value}
-  </div>
-);
+}) => {
+  const classes = classNames(
+    `cell cell-coordinates-${x}-${y}`,
+    {
+      'cell-active': active,
+      [`${move.axis === 'x' ? 'left' : 'top'}-from-${move.from}-to-${move.to}`]: move,
+    },
+  );
+
+  return (
+    <div
+      key={`cell-${value}`}
+      className={classes}
+    >
+      {value}
+    </div>
+  );
+};
 
 export default Cell;
