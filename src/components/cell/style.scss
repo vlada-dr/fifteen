@@ -1,5 +1,6 @@
 @import "scss/mixins.scss";
 @import "scss/constants.scss";
+@import "scss/flex.scss";
 
 .cell {   
   z-index: 2;
@@ -10,7 +11,7 @@
   height: $cell;
   position: absolute;
   font-size: 2rem;
-  @include box();
+  @include common-flex(center, center);
   @include box-sizing();
 }
 
