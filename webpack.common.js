@@ -20,6 +20,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    modules: ['./src', 'node_modules']    
+  },
   plugins: [
     new HtmlWebpackPlugin({ 
       template: './src/index.html', 

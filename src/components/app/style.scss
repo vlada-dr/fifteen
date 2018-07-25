@@ -1,14 +1,13 @@
-$alert-width: 45vmax;
+@import "scss/mixins.scss";
+@import "scss/flex.scss";
+@import "scss/constants.scss";
 
 .game-container {
   width: 100vw;
-  height:100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-
-  @keyframes win-alert {
+  height: 100vh;
+  @include common-flex(center, center);
+  @include border-radius(2px);
+  @include keyframes(win-alert) {
     from {  
       width: 0;
       height: 0;
@@ -21,60 +20,51 @@ $alert-width: 45vmax;
     }
   }
 
-  button.main {
-    background: #4054B2;
+  .button-base {
+    -webkit-appearance: none;
+    background: transparent;
+    outline: none;
     color: white;
+    margin: 1rem;
+    border: none;
+    @include border-radius(4px);
+    @include transition();
+  }
+
+  button.main {
+    @extend .button-base;
+    background: #4054B2;
     position: absolute;
     padding: .3rem .8rem;
     letter-spacing: .1rem;
-    top: 5vh;
-    right: 5vw; 
-    border: none;
-    border-radius: 4px;
-    -webkit-appearance: none;
-    outline: none;
+    top: 2rem;
+    right: 2rem; 
   }
 
   .win {
-    border-radius: 3px;
-    z-index:3;
+    z-index: 3;
     position: absolute;
     height: $alert-width;
     width:  $alert-width;
-    background: #fdc830;
-    background: -webkit-linear-gradient(to right, #fdc830, #f37335); 
-    background: linear-gradient(to right, #fdc830, #f37335); 
-    animation-name: win-alert;
-    animation-duration: .7s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     color: white;
     letter-spacing: .3rem;
     font-size: 1.5rem;
     font-weight: bolder;
     text-transform: uppercase;
-
+    @include border-radius(3px);
+    @include gradient(#fdc830, #f37335); 
+    @include animation(win-alert, 0.7s);
+    @include common-flex(center, center, column);
     button {
-      background: transparent;
-      border-radius: 4px;
-      -webkit-appearance: none;
-      outline: none;
-      color: white;
+      @extend .button-base;
       border: 1px solid white;
       font-size: 1.2rem;
       padding: .8rem;
-      margin: 1rem;
       text-transform: uppercase;
-      transition: all 0.3s ease-out;
+        
       &:hover {
         background: rgba(255,255,255,0.4);
       }
     }
   }
-
-  
-
- 
 }

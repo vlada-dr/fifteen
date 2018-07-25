@@ -1,17 +1,12 @@
-$field-width: 40vmax;
-$orange: #FD9727;
+@import "scss/mixins.scss";
+@import "scss/constants.scss";
 
 .field {
   position: relative;
-
   width: $field-width;
   height: $field-width;
 
   background-color: $orange;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-
   border: 1px black solid;
- 
+  @include box-sizing(border-box);
 }

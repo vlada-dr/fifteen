@@ -9,6 +9,7 @@
       "indent": 2,
       "linebreak-style": "off",
       "object-curly-newline": "off",
+      "import/no-unresolved": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

@@ -11,7 +11,7 @@ const Cell = ({
     `cell cell-coordinates-${x}-${y}`,
     {
       'cell-active': active,
-      [`${move.axis === 'x' ? 'left' : 'top'}-from-${move.from}-to-${move.to}`]: move,
+      [`${move.axis === 'x' ? 'left' : 'top'}-from-${move.from}-to-${move.to}`]: Object.keys(move).length > 0,
     },
   );
 
@@ -37,9 +37,7 @@ Cell.propTypes = {
 
 Cell.defaultProps = {
   active: false,
-  move: {
-    axis: '',
-  },
+  move: { },
 };
 
 export default Cell;

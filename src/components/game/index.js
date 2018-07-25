@@ -83,26 +83,26 @@ export default class Game extends Component {
 
     if (action) {
       const { axis, sign, start, end } = action;
-
       const toChange = current[axis];
+      const changedValue = sign(toChange);
+
       if (toChange > start && toChange < end) {
         const newTarget = {
           ...current,
-          [axis]: sign(toChange),
+          [axis]: changedValue,
         };
 
         const toSwap = cells.findIndex(c => c.x === newTarget.x && c.y === newTarget.y);
-
         const newCells = [...cells];
-        newCells[toSwap][axis] = current[axis];
+        newCells[toSwap][axis] = toChange;
 
         this.setState({
           previous: current,
           current: newTarget,
           cells: newCells,
           move: {
-            from: newTarget[axis],
-            to: current[axis],
+            from: changedValue,
+            to: toChange,
             axis,
           },
         });
@@ -111,7 +111,6 @@ export default class Game extends Component {
       }
     }
   }
-
 
   render() {
     const { cells, previous: { x, y }, move } = this.state;

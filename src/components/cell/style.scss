@@ -1,32 +1,18 @@
-$grid-row-cells: 4;
-$cell: 10vmax;
-$orange: #FD9727;
-$moving: left top;
+@import "scss/mixins.scss";
+@import "scss/constants.scss";
 
 .cell {   
+  z-index: 2;
+  border: 1px black solid;
   background: white;
+  color: $orange;
   width: $cell;
   height: $cell;
-  position:absolute;
+  position: absolute;
   font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
- 
-  border: 1px black solid;
-  color: $orange;
-  z-index: 2;
+  @include box();
+  @include box-sizing();
 }
-
-.cell-active {
-  background: transparent;
-  box-sizing: border-box;
-}
-
 
 @for $x from 1 through $grid-row-cells {
   @for $y from 1 through $grid-row-cells {
@@ -41,11 +27,9 @@ $moving: left top;
   @for $next from 1 through $grid-row-cells {
     @each $direction in $moving {
       .#{$direction}-from-#{$prev}-to-#{$next} {
-        animation-duration: 0.4s;
-        animation-name: #{$direction}-from-#{$prev}-to-#{$next};
-        animation-fill-mode: forwards;
+        @include animation(#{$direction}-from-#{$prev}-to-#{$next}, .4s);
       }
-      @keyframes #{$direction}-from-#{$prev}-to-#{$next} {
+      @include keyframes(#{$direction}-from-#{$prev}-to-#{$next}) {
         from {
           #{$direction}: floor($cell * $prev) - $cell;
         }
