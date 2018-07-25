@@ -34,7 +34,7 @@ const keys = {
 export default class Game extends Component {
   static propTypes = {
     check: PropTypes.func,
-    cells: PropTypes.number.isRequired,
+    cells: PropTypes.arrayOf(Cell).isRequired,
     current: PropTypes.objectOf(PropTypes.number),
     version: PropTypes.number.isRequired,
   }
@@ -107,7 +107,7 @@ export default class Game extends Component {
           },
         });
 
-        check(newCells);
+        check(newCells, newTarget);
       }
     }
   }
@@ -123,7 +123,7 @@ export default class Game extends Component {
             <Cell
               {...cell}
               key={cell.value}
-              move={cell.x === x && cell.y === y && move}
+              move={cell.x === x && cell.y === y ? move : { }}
             />
           ))
         }

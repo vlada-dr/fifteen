@@ -26,7 +26,7 @@ const Cell = ({
 Cell.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  value: PropTypes.number,
+  value: PropTypes.number.isRequired,
   active: PropTypes.bool,
   move: PropTypes.shape({
     axis: PropTypes.string,
@@ -36,9 +36,10 @@ Cell.propTypes = {
 };
 
 Cell.defaultProps = {
-  value: '',
   active: false,
-  move: {},
+  move: {
+    axis: '',
+  },
 };
 
 export default Cell;

@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import Game from '../game';
+import { shuffle, rand, generate, getValue } from './helpers';
 import './style.scss';
 
-
-const position = id => ({ x: (id % 4) + 1, y: Math.floor(id / 4) + 1 });
-
-const getValue = (x, y) => x + (y - 1) * 4;
-
-function generate() {
-  const res = [];
-  const size = 4;
-  for (let i = 0; i < size * size - 1; i += 1) {
-    res.push(Object.assign(position(i), { value: i + 1 }));
-  }
-  return res;
-}
 
 export default class App extends Component {
   state = {
@@ -28,29 +16,28 @@ export default class App extends Component {
   }
 
   shuffle = () => {
-    const cells = [];
-    const res = [];
-    const { version } = this.state;
+    const { version, cells, current } = this.state;
 
-    for (let i = 0; i < 16; i += 1) cells.push(i);
+    const shuffled = shuffle(cells);
+    const id = rand(15);
+    const curr = shuffled[id];
 
-    cells.sort(() => 0.5 - Math.random());
+    shuffled[id] = {
+      ...current,
+      value: curr.value,
+    };
 
-    for (let i = 0; i < 15; i += 1) {
-      res.push(Object.assign(position(cells[i]), { value: i + 1 }));
-    }
     this.setState({
-      cells: res,
+      cells: shuffled,
       version: version + 1,
-      current: position(cells[15]),
+      current: curr,
       win: false,
     });
   }
 
-  check = (cells) => {
+  check = (cells, current) => {
     const win = cells.every(({ x, y, value }) => getValue(x, y) === value);
-
-    this.setState({ win });
+    this.setState({ win, cells, current });
   }
 
   render() {
